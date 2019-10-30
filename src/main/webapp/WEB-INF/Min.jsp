@@ -19,18 +19,39 @@
                 align-items: center;
             }
         </style>
+        <script>
+            function getMin() {
+                let numbers = document.getElementById('numbers').value.split(',').map(Number);
+                let min = numbers[0];
+                for(const number of numbers) {
+                    if(number < min) {
+                        min = number;
+                    }
+                }
+                document.getElementById('wynik').innerHTML = min.toString();
+                let historia = document.getElementById('historia').innerText;
+
+                console.log('h: ' + historia + ' len: ' + historia.length);
+                if(historia.length > 0) {
+                    historia = historia.split(', ');
+                } else {
+                    historia = [];
+                }
+                historia.push(min.toString());
+                console.log(historia);
+                document.getElementById('historia').innerHTML = historia.toString();
+            }
+        </script>
     </head>
     <body>
         <div class="container vertical-center">
             <div class="container">
                 <span class="align-middle">Hello <%=request.getParameter("login")%></span>
-                <form class="align-middle">
-                    <div class="form-group">
-                        <label for="number">Login</label>
-                        <input type="number" class="form-control" id="number" name="number">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                <label for="numbers">Login</label>
+                <textarea id="numbers"></textarea>
+                <button onclick="getMin()" class="btn btn-primary">Wyznacz</button>
+                <span>Wynik: <span id="wynik"></span></span>
+                <span>Ostatnie wyniki: <span id="historia"></span></span>
                 <form action="/ZadanieServlet/">
                     <button name="reset" value="reset" class="btn btn-primary">Home</button>
                 </form>
