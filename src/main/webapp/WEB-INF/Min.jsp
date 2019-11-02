@@ -29,30 +29,51 @@
                     }
                 }
                 document.getElementById('wynik').innerHTML = min.toString();
-                let historia = document.getElementById('historia').innerText;
 
-                console.log('h: ' + historia + ' len: ' + historia.length);
-                if(historia.length > 0) {
-                    historia = historia.split(', ');
+                let historiaSS;
+
+                if(sessionStorage.getItem('historia') != null) {
+                    historiaSS = sessionStorage.getItem('historia');
                 } else {
-                    historia = [];
+                    historiaSS = [];
                 }
-                historia.push(min.toString());
-                console.log(historia);
-                document.getElementById('historia').innerHTML = historia.toString();
+
+                if(historiaSS.length > 0) {
+                    historiaSS = historiaSS.split(',');
+                }
+
+                historiaSS.push(min.toString());
+                console.log(historiaSS);
+
+                document.getElementById('historia').innerHTML = historiaSS.toString();
+                sessionStorage.setItem('historia', historiaSS);
+            }
+
+            function onLoad() {
+                console.log('tiggered');
+                let historiaSS;
+
+                if(sessionStorage.getItem('historia') != null) {
+                    historiaSS = sessionStorage.getItem('historia');
+                } else {
+                    historiaSS = [];
+                }
+
+                document.getElementById('historia').innerHTML = historiaSS.toString();
             }
         </script>
     </head>
-    <body>
+    <body onload="onLoad()">
         <div class="container vertical-center">
             <div class="container">
-                <span class="align-middle">Hello <%=request.getParameter("login")%></span>
-                <label for="numbers">Login</label>
-                <textarea id="numbers"></textarea>
-                <button onclick="getMin()" class="btn btn-primary">Wyznacz</button>
-                <span>Wynik: <span id="wynik"></span></span>
-                <span>Ostatnie wyniki: <span id="historia"></span></span>
-                <form action="/ZadanieServlet/">
+                <p class="align-middle">Hello <%=request.getParameter("login")%></p>
+                <div class="container">
+                    <textarea id="numbers"></textarea><br><br>
+                    <button onclick="getMin()" class="btn btn-primary">Wyznacz</button>
+                </div>
+                <p>Wynik: <span id="wynik"></span></p>
+                <p>Ostatnie wyniki: <span id="historia"></span></p>
+                <form action="/ZadanieServlet/hehe">
                     <button name="reset" value="reset" class="btn btn-primary">Home</button>
                 </form>
             </div>
